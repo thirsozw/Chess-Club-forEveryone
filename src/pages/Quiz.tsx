@@ -16,8 +16,9 @@ export default function Quiz() {
   const [finished, setFinished] = useState(false)
 
   const questions = quizzes[lessonId || '']
-  const lesson = lessons.find(l => l.id === lessonId)
-  if (!questions || !lesson) return <div className="text-center py-20">Quiz não encontrado</div>
+  const foundLesson = lessons.find(l => l.id === lessonId)
+  if (!questions || !foundLesson) return <div className="text-center py-20">Quiz não encontrado</div>
+  const lesson = foundLesson
 
   const q = questions[currentQ]
   const isCorrect = selected === q.correctIndex

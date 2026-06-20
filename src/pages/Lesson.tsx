@@ -16,22 +16,23 @@ export default function Lesson() {
   const lesson = lessons.find(l => l.id === lessonId)
   if (!lesson) return <div className="text-center py-20">Lição não encontrada</div>
 
-  const step = lesson.steps[stepIndex]
-  const isLastStep = stepIndex === lesson.steps.length - 1
-  const isCompleted = state.completedLessons.includes(lesson.id)
-  const hasQuiz = quizzes[lesson.id] !== undefined
+  const { id, steps, xpReward, coinReward, icon, title, description } = lesson
+  const step = steps[stepIndex]
+  const isLastStep = stepIndex === steps.length - 1
+  const isCompleted = state.completedLessons.includes(id)
+  const hasQuiz = quizzes[id] !== undefined
 
   function completeLesson() {
-    dispatch({ type: 'COMPLETE_LESSON', lessonId: lesson.id })
-    dispatch({ type: 'ADD_XP', amount: lesson.xpReward })
-    dispatch({ type: 'ADD_COINS', amount: lesson.coinReward })
+    dispatch({ type: 'COMPLETE_LESSON', lessonId: id })
+    dispatch({ type: 'ADD_XP', amount: xpReward })
+    dispatch({ type: 'ADD_COINS', amount: coinReward })
   }
 
   function handleNext() {
     if (isLastStep) {
       if (!isCompleted) completeLesson()
       if (hasQuiz) {
-        navigate(`/quiz/${lesson.id}`)
+        navigate(`/quiz/${id}`)
       } else {
         navigate('/learn')
       }
@@ -47,10 +48,10 @@ export default function Lesson() {
       </button>
 
       <div className="flex items-center gap-3 mb-6">
-        <span className="text-4xl">{lesson.icon}</span>
+        <span className="text-4xl">{icon}</span>
         <div>
-          <h1 className="text-2xl font-black">{lesson.title}</h1>
-          <p className="text-gray-500 text-sm">{lesson.description}</p>
+          <h1 className="text-2xl font-black">{title}</h1>
+          <p className="text-gray-500 text-sm">{description}</p>
         </div>
       </div>
 
@@ -58,7 +59,7 @@ export default function Lesson() {
         <motion.div
           className="h-2 rounded-full bg-[var(--color-primary)]"
           initial={{ width: 0 }}
-          animate={{ width: `${((stepIndex + 1) / lesson.steps.length) * 100}%` }}
+          animate={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }}
         />
       </div>
 

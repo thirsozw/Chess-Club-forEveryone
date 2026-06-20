@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { CheckCircle, Lock, ChevronRight } from 'lucide-react'
+import { CheckCircle, ChevronRight } from 'lucide-react'
 import { lessons, levelNames } from '../data/lessons'
 import { useGame } from '../context/GameContext'
 

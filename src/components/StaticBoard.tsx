@@ -84,7 +84,7 @@ export default function StaticBoard({ fen, highlightSquares = [], size = 400 }: 
               }}
             >
               {symbol && (
-                <span style={{ lineHeight: 1, filter: piece === piece.toUpperCase() ? 'none' : 'none' }}>
+                <span style={{ lineHeight: 1 }}>
                   {symbol}
                 </span>
               )}

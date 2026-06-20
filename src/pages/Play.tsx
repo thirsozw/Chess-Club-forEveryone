@@ -57,9 +57,9 @@ export default function Play() {
     const styles: Record<string, React.CSSProperties> = {}
     if (selectedSquare) {
       styles[selectedSquare] = { backgroundColor: 'rgba(108, 99, 255, 0.4)' }
-      const moves = game.moves({ square: selectedSquare, verbose: true })
+      const moves = game.moves({ square: selectedSquare as 'a1', verbose: true })
       moves.forEach(m => {
-        styles[m.to] = {
+        styles[m.to as string] = {
           background: 'radial-gradient(circle, rgba(108,99,255,0.3) 25%, transparent 25%)',
           borderRadius: '50%',
         }
