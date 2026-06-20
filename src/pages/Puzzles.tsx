@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { Chessboard } from 'react-chessboard'
 import { CheckCircle } from 'lucide-react'
 import { puzzles, dailyMotivation } from '../data/puzzles'
@@ -35,10 +34,10 @@ export default function Puzzles() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
+      <div className="text-center mb-8 anim-fade-up">
         <h1 className="text-3xl font-black mb-2">🧩 Quebra-Cabeças</h1>
         <p className="text-gray-500 italic text-sm">{quote}</p>
-      </motion.div>
+      </div>
 
       <div className="flex gap-2 flex-wrap justify-center mb-8">
         {puzzles.map((p, i) => (
@@ -89,16 +88,16 @@ export default function Puzzles() {
           </div>
 
           {feedback === 'correct' && (
-            <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="bg-green-50 border-2 border-green-300 rounded-2xl p-4 text-center">
+            <div className="bg-green-50 border-2 border-green-300 rounded-2xl p-4 text-center anim-scale-in">
               <CheckCircle size={32} className="mx-auto mb-2 text-green-500" />
               <p className="font-bold text-green-700">Correto! Excelente!</p>
-            </motion.div>
+            </div>
           )}
 
           {feedback === 'wrong' && (
-            <motion.div initial={{ x: [-10, 10, -10, 0] }} animate={{ x: 0 }} className="bg-red-50 border-2 border-red-300 rounded-2xl p-4 text-center">
+            <div className="bg-red-50 border-2 border-red-300 rounded-2xl p-4 text-center anim-fade-in">
               <p className="font-bold text-red-700">Tente novamente!</p>
-            </motion.div>
+            </div>
           )}
 
           <div className="bg-white rounded-2xl p-4 shadow-md">

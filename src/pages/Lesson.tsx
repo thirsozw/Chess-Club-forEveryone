@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, CheckCircle, HelpCircle } from 'lucide-react'
 import { lessons } from '../data/lessons'
 import { quizzes } from '../data/quizzes'
@@ -31,11 +30,8 @@ export default function Lesson() {
   function handleNext() {
     if (isLastStep) {
       if (!isCompleted) completeLesson()
-      if (hasQuiz) {
-        navigate(`/quiz/${id}`)
-      } else {
-        navigate('/learn')
-      }
+      if (hasQuiz) navigate(`/quiz/${id}`)
+      else navigate('/learn')
     } else {
       setStepIndex(s => s + 1)
     }
@@ -47,7 +43,7 @@ export default function Lesson() {
         <ChevronLeft size={20} /> Voltar às lições
       </button>
 
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-6 anim-fade-up">
         <span className="text-4xl">{icon}</span>
         <div>
           <h1 className="text-2xl font-black">{title}</h1>
@@ -56,44 +52,22 @@ export default function Lesson() {
       </div>
 
       <div className="w-full bg-gray-200 rounded-full h-2 mb-8">
-        <motion.div
-          className="h-2 rounded-full bg-[var(--color-primary)]"
-          initial={{ width: 0 }}
-          animate={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }}
-        />
+        <div className="h-2 rounded-full bg-[var(--color-primary)] transition-all duration-300" style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex justify-center"
-        >
+        <div className="flex justify-center anim-scale-in">
           <div className="w-full max-w-[400px]">
-            <StaticBoard
-              fen={step.fen}
-              highlightSquares={step.highlightSquares}
-              size={400}
-            />
+            <StaticBoard fen={step.fen} highlightSquares={step.highlightSquares} size={400} />
           </div>
-        </motion.div>
+        </div>
 
         <div>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={stepIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="bg-white rounded-2xl p-6 shadow-lg"
-            >
-              <div className="flex items-center gap-2 text-sm text-gray-400 mb-3">
-                Passo {stepIndex + 1} de {lesson.steps.length}
-              </div>
-              <h2 className="text-xl font-bold mb-4">{step.title}</h2>
-              <p className="text-gray-600 leading-relaxed text-base">{step.content}</p>
-            </motion.div>
-          </AnimatePresence>
+          <div key={stepIndex} className="bg-white rounded-2xl p-6 shadow-lg anim-fade-up">
+            <div className="text-sm text-gray-400 mb-3">Passo {stepIndex + 1} de {steps.length}</div>
+            <h2 className="text-xl font-bold mb-4">{step.title}</h2>
+            <p className="text-gray-600 leading-relaxed text-base">{step.content}</p>
+          </div>
 
           <div className="flex justify-between mt-6">
             <button

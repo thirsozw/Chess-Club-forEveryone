@@ -1,5 +1,4 @@
 import { useState, useMemo, useCallback } from 'react'
-import { motion } from 'framer-motion'
 import { Chess } from 'chess.js'
 import { Chessboard } from 'react-chessboard'
 import { RotateCcw, Info } from 'lucide-react'
@@ -22,7 +21,6 @@ export default function Play() {
     currentGame.move(randomMove)
     setGame(new Chess(currentGame.fen()))
     setMoveHistory(prev => [...prev, randomMove])
-
     if (currentGame.isGameOver()) {
       if (currentGame.isCheckmate()) setGameOver('Xeque-Mate! Você perdeu.')
       else if (currentGame.isDraw()) setGameOver('Empate!')
@@ -37,7 +35,6 @@ export default function Play() {
       setGame(gameCopy)
       setMoveHistory(prev => [...prev, move.san])
       setSelectedSquare(null)
-
       if (gameCopy.isGameOver()) {
         if (gameCopy.isCheckmate()) setGameOver('Xeque-Mate! Você venceu!')
         else if (gameCopy.isDraw()) setGameOver('Empate!')
@@ -45,12 +42,9 @@ export default function Play() {
         dispatch({ type: 'ADD_XP', amount: 20 })
         return true
       }
-
       setTimeout(() => makeAIMove(gameCopy), 300)
       return true
-    } catch {
-      return false
-    }
+    } catch { return false }
   }, [game, dispatch, makeAIMove])
 
   const legalMoveStyles = useMemo(() => {
@@ -67,9 +61,7 @@ export default function Play() {
     }
     if (game.inCheck()) {
       const kingSquare = game.board().flat().find(p => p?.type === 'k' && p.color === game.turn())
-      if (kingSquare) {
-        styles[kingSquare.square] = { backgroundColor: 'rgba(255,0,0,0.4)' }
-      }
+      if (kingSquare) styles[kingSquare.square] = { backgroundColor: 'rgba(255,0,0,0.4)' }
     }
     return styles
   }, [selectedSquare, game])
@@ -85,10 +77,10 @@ export default function Play() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
+      <div className="text-center mb-8 anim-fade-up">
         <h1 className="text-3xl font-black mb-2">🎮 Jogar Xadrez</h1>
         <p className="text-gray-500">Jogue contra o computador e pratique!</p>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 flex justify-center">
@@ -104,9 +96,7 @@ export default function Play() {
                   if (selectedSquare) {
                     const success = makeMove(selectedSquare, square)
                     if (!success) setSelectedSquare(square)
-                  } else {
-                    setSelectedSquare(square)
-                  }
+                  } else setSelectedSquare(square)
                 },
                 boardStyle: { borderRadius: '12px', boxShadow: '0 8px 32px rgba(0,0,0,0.15)' },
                 darkSquareStyle: { backgroundColor: currentTheme.boardColors.dark },
@@ -121,22 +111,20 @@ export default function Play() {
 
         <div className="space-y-4">
           {gameOver && (
-            <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-4 text-center">
+            <div className="bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-4 text-center anim-scale-in">
               <p className="text-2xl font-black">{gameOver}</p>
-            </motion.div>
+            </div>
           )}
 
           <div className="bg-white rounded-2xl p-4 shadow-md">
             <h3 className="font-bold mb-3 flex items-center gap-2"><Info size={18} /> Status</h3>
-            <p className="text-sm text-gray-600">
-              {game.turn() === 'w' ? '⬜ Brancas jogam' : '⬛ Pretas jogam'}
-            </p>
+            <p className="text-sm text-gray-600">{game.turn() === 'w' ? '⬜ Brancas jogam' : '⬛ Pretas jogam'}</p>
             {game.inCheck() && <p className="text-red-500 font-bold text-sm mt-1">⚠️ Xeque!</p>}
           </div>
 
           <div className="bg-white rounded-2xl p-4 shadow-md">
             <h3 className="font-bold mb-3">Movimentos</h3>
-            <div className="max-h-48 overflow-y-auto text-sm space-y-1">
+            <div className="max-h-48 overflow-y-auto text-sm">
               {moveHistory.length === 0 ? (
                 <p className="text-gray-400">Nenhum movimento ainda</p>
               ) : (
@@ -149,11 +137,9 @@ export default function Play() {
             </div>
           </div>
 
-          <div className="flex gap-3">
-            <button onClick={resetGame} className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold bg-gray-100 hover:bg-gray-200 border-none cursor-pointer text-base">
-              <RotateCcw size={18} /> Novo Jogo
-            </button>
-          </div>
+          <button onClick={resetGame} className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold bg-gray-100 hover:bg-gray-200 border-none cursor-pointer text-base">
+            <RotateCcw size={18} /> Novo Jogo
+          </button>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Chessboard } from 'react-chessboard'
 import { Check, Palette } from 'lucide-react'
 import { useTheme, themes } from '../context/ThemeContext'
@@ -9,27 +8,23 @@ export default function ThemeSelector() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
+      <div className="text-center mb-10 anim-fade-up">
         <Palette size={40} className="mx-auto mb-3 text-[var(--color-primary)]" />
         <h1 className="text-3xl font-black mb-2">Escolha seu Tema</h1>
         <p className="text-gray-500">Personalize seu tabuleiro com o tema que mais combina com você!</p>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {themes.map((theme, i) => {
           const isActive = currentTheme.id === theme.id
           return (
-            <motion.button
+            <button
               key={theme.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ scale: 1.03, y: -4 }}
               onClick={() => setTheme(theme.id)}
-              className={`relative bg-white rounded-2xl p-4 shadow-md text-left cursor-pointer border-3 transition-all ${
-                isActive ? 'border-[var(--color-primary)] shadow-lg' : 'border-transparent hover:shadow-lg'
+              className={`relative bg-white rounded-2xl p-4 shadow-md text-left cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all anim-fade-up ${
+                isActive ? 'ring-3 ring-[var(--color-primary)]' : ''
               }`}
-              style={{ borderWidth: '3px' }}
+              style={{ animationDelay: `${i * 0.05}s`, border: isActive ? '3px solid var(--color-primary)' : '3px solid transparent' }}
             >
               {isActive && (
                 <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-[var(--color-primary)] flex items-center justify-center">
@@ -39,9 +34,7 @@ export default function ThemeSelector() {
 
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-3xl">{theme.icon}</span>
-                <div>
-                  <h3 className="font-bold">{theme.name}</h3>
-                </div>
+                <h3 className="font-bold">{theme.name}</h3>
               </div>
 
               <div className="rounded-xl overflow-hidden">
@@ -62,7 +55,7 @@ export default function ThemeSelector() {
                   <div key={j} className="w-6 h-6 rounded-full border-2 border-white shadow" style={{ backgroundColor: c }} />
                 ))}
               </div>
-            </motion.button>
+            </button>
           )
         })}
       </div>

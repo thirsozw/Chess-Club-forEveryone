@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Home, BookOpen, Gamepad2, Puzzle, Heart, User, Palette } from 'lucide-react'
 import { useGame } from '../context/GameContext'
 
@@ -63,49 +62,39 @@ export default function Navbar() {
             )}
           </div>
 
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
-            onClick={() => setIsOpen(!isOpen)}
-          >
+          <button className="md:hidden p-2 rounded-lg hover:bg-gray-100" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="md:hidden overflow-hidden bg-white border-t"
-          >
-            <div className="px-4 py-2 space-y-1">
-              {navItems.map(item => {
-                const Icon = item.icon
-                const isActive = location.pathname === item.path
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl no-underline font-semibold ${
-                      isActive ? 'bg-[var(--color-primary)] text-white' : 'text-gray-600'
-                    }`}
-                  >
-                    <Icon size={20} />
-                    {item.label}
-                  </Link>
-                )
-              })}
-              <div className="flex gap-2 px-4 py-3">
-                <span className="bg-yellow-100 px-3 py-1 rounded-full text-sm font-bold">⭐ {state.xp} XP</span>
-                <span className="bg-amber-100 px-3 py-1 rounded-full text-sm font-bold">🪙 {state.coins}</span>
-              </div>
+      {isOpen && (
+        <div className="md:hidden bg-white border-t anim-fade-in">
+          <div className="px-4 py-2 space-y-1">
+            {navItems.map(item => {
+              const Icon = item.icon
+              const isActive = location.pathname === item.path
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl no-underline font-semibold ${
+                    isActive ? 'bg-[var(--color-primary)] text-white' : 'text-gray-600'
+                  }`}
+                >
+                  <Icon size={20} />
+                  {item.label}
+                </Link>
+              )
+            })}
+            <div className="flex gap-2 px-4 py-3">
+              <span className="bg-yellow-100 px-3 py-1 rounded-full text-sm font-bold">⭐ {state.xp} XP</span>
+              <span className="bg-amber-100 px-3 py-1 rounded-full text-sm font-bold">🪙 {state.coins}</span>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }

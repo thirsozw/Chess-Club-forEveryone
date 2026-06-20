@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { CheckCircle, ChevronRight } from 'lucide-react'
 import { lessons, levelNames } from '../data/lessons'
 import { useGame } from '../context/GameContext'
@@ -15,11 +14,7 @@ export default function Learn() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-10"
-      >
+      <div className="text-center mb-10 anim-fade-up">
         <h1 className="text-3xl md:text-4xl font-black mb-2">
           Trilha de <span className="gradient-text">Aprendizado</span>
         </h1>
@@ -32,16 +27,11 @@ export default function Learn() {
             Nível {state.level}
           </span>
         </div>
-      </motion.div>
+      </div>
 
       <div className="space-y-8">
         {levels.map(({ level, name, lessons: lvlLessons }) => (
-          <motion.div
-            key={level}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
+          <div key={level} className="anim-slide-right" style={{ animationDelay: `${level * 0.05}s` }}>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center font-bold">
                 {level}
@@ -54,48 +44,33 @@ export default function Learn() {
                 const completed = state.completedLessons.includes(lesson.id)
                 const quizScore = state.quizScores[lesson.id]
                 return (
-                  <motion.div
+                  <Link
                     key={lesson.id}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    className="relative"
+                    to={`/learn/${lesson.id}`}
+                    className="block bg-white rounded-2xl p-5 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all no-underline text-inherit"
                   >
-                    <Link
-                      to={`/learn/${lesson.id}`}
-                      className="block bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all no-underline text-inherit"
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="text-3xl">{lesson.icon}</div>
-                        <div className="flex-1">
-                          <h3 className="font-bold text-base mb-1">{lesson.title}</h3>
-                          <p className="text-gray-500 text-sm mb-2">{lesson.description}</p>
-                          <div className="flex items-center gap-2 text-xs">
-                            <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-bold">
-                              +{lesson.xpReward} XP
-                            </span>
-                            <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold">
-                              +{lesson.coinReward} 🪙
-                            </span>
-                            {quizScore !== undefined && (
-                              <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">
-                                Quiz: {quizScore}%
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex items-center">
-                          {completed ? (
-                            <CheckCircle size={24} className="text-green-500" />
-                          ) : (
-                            <ChevronRight size={24} className="text-gray-300" />
+                    <div className="flex items-start gap-4">
+                      <div className="text-3xl">{lesson.icon}</div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-base mb-1">{lesson.title}</h3>
+                        <p className="text-gray-500 text-sm mb-2">{lesson.description}</p>
+                        <div className="flex items-center gap-2 text-xs">
+                          <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-bold">+{lesson.xpReward} XP</span>
+                          <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold">+{lesson.coinReward} 🪙</span>
+                          {quizScore !== undefined && (
+                            <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">Quiz: {quizScore}%</span>
                           )}
                         </div>
                       </div>
-                    </Link>
-                  </motion.div>
+                      <div className="flex items-center">
+                        {completed ? <CheckCircle size={24} className="text-green-500" /> : <ChevronRight size={24} className="text-gray-300" />}
+                      </div>
+                    </div>
+                  </Link>
                 )
               })}
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
