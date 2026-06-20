@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --font-nunito: 'Nunito', sans-serif;
+  --color-primary: #6C63FF;
+  --color-primary-dark: #5A52D5;
+  --color-secondary: #FF6B6B;
+  --color-accent: #4ECDC4;
+  --color-warning: #FFE66D;
+  --color-success: #51CF66;
+  --color-bg: #F8F9FF;
+  --color-card: #FFFFFF;
+  --color-text: #2D3436;
+  --color-text-light: #636E72;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #6C63FF, #FF6B6B, #4ECDC4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dyslexia-font body {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+}
+
+.high-contrast body {
+  filter: contrast(1.3);
+}
