@@ -18,17 +18,19 @@ export default function Puzzles() {
   const themedPieces = useMemo(() => getThemedPieces(currentTheme.id), [currentTheme.id])
 
   function onDrop({ sourceSquare, targetSquare }: { piece: unknown; sourceSquare: string; targetSquare: string | null }) {
-    if (!targetSquare) return false
+    if (!targetSquare || targetSquare === sourceSquare) return false
     const move = sourceSquare + targetSquare
     if (puzzle.solution.includes(move)) {
       setFeedback('correct')
-      setSolved(prev => new Set(prev).add(puzzle.id))
-      dispatch({ type: 'ADD_XP', amount: puzzle.xpReward })
-      dispatch({ type: 'ADD_COINS', amount: 5 })
-    } else {
-      setFeedback('wrong')
-      setTimeout(() => setFeedback(null), 1500)
+      if (!solved.has(puzzle.id)) {
+        setSolved(prev => new Set(prev).add(puzzle.id))
+        dispatch({ type: 'ADD_XP', amount: puzzle.xpReward })
+        dispatch({ type: 'ADD_COINS', amount: 5 })
+      }
+      return true
     }
+    setFeedback('wrong')
+    setTimeout(() => setFeedback(null), 1500)
     return false
   }
 
