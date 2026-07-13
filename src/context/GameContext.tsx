@@ -62,8 +62,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     case 'COMPLETE_LESSON':
       if (state.completedLessons.includes(action.lessonId)) return state
       return { ...state, completedLessons: [...state.completedLessons, action.lessonId] }
-    case 'SAVE_QUIZ_SCORE':
-      return { ...state, quizScores: { ...state.quizScores, [action.lessonId]: action.score } }
+    case 'SAVE_QUIZ_SCORE': {
+      const best = Math.max(state.quizScores[action.lessonId] ?? 0, action.score)
+      return { ...state, quizScores: { ...state.quizScores, [action.lessonId]: best } }
+    }
     case 'UNLOCK_MEDAL':
       if (state.medals.find(m => m.id === action.medal.id)) return state
       return { ...state, medals: [...state.medals, { ...action.medal, unlockedAt: new Date().toISOString() }] }

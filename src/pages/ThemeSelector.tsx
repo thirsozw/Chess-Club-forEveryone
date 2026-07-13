@@ -1,7 +1,6 @@
-import { Chessboard } from 'react-chessboard'
 import { Check, Palette } from 'lucide-react'
 import { useTheme, themes } from '../context/ThemeContext'
-import { getThemedPieces } from '../utils/themedPieces'
+import StaticBoard from '../components/StaticBoard'
 
 export default function ThemeSelector() {
   const { currentTheme, setTheme } = useTheme()
@@ -21,13 +20,14 @@ export default function ThemeSelector() {
             <button
               key={theme.id}
               onClick={() => setTheme(theme.id)}
+              aria-pressed={isActive}
               className={`relative bg-white rounded-2xl p-4 shadow-md text-left cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all anim-fade-up ${
                 isActive ? 'ring-3 ring-[var(--color-primary)]' : ''
               }`}
               style={{ animationDelay: `${i * 0.05}s`, border: isActive ? '3px solid var(--color-primary)' : '3px solid transparent' }}
             >
               {isActive && (
-                <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-[var(--color-primary)] flex items-center justify-center">
+                <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-[var(--color-primary)] flex items-center justify-center z-10">
                   <Check size={16} className="text-white" />
                 </div>
               )}
@@ -37,17 +37,8 @@ export default function ThemeSelector() {
                 <h3 className="font-bold">{theme.name}</h3>
               </div>
 
-              <div className="rounded-xl overflow-hidden">
-                <Chessboard
-                  options={{
-                    position: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-                    allowDragging: false,
-                    darkSquareStyle: { backgroundColor: theme.boardColors.dark },
-                    lightSquareStyle: { backgroundColor: theme.boardColors.light },
-                    boardStyle: { borderRadius: '8px' },
-                    pieces: getThemedPieces(theme.id),
-                  }}
-                />
+              <div className="rounded-xl overflow-hidden pointer-events-none">
+                <StaticBoard size={280} themeId={theme.id} boardColors={theme.boardColors} />
               </div>
 
               <div className="flex gap-2 mt-3">

@@ -92,7 +92,17 @@ export default function Puzzles() {
           {feedback === 'correct' && (
             <div className="bg-green-50 border-2 border-green-300 rounded-2xl p-4 text-center anim-scale-in">
               <CheckCircle size={32} className="mx-auto mb-2 text-green-500" />
-              <p className="font-bold text-green-700">Correto! Excelente!</p>
+              <p className="font-bold text-green-700 mb-3">Correto! Excelente!</p>
+              {currentPuzzle < puzzles.length - 1 ? (
+                <button
+                  onClick={() => { setCurrentPuzzle(c => c + 1); setFeedback(null) }}
+                  className="px-6 py-2.5 rounded-xl font-bold bg-green-500 text-white hover:bg-green-600 border-none cursor-pointer text-base"
+                >
+                  Próximo Puzzle →
+                </button>
+              ) : (
+                <p className="text-sm text-green-600 font-semibold">🎉 Você chegou ao último puzzle!</p>
+              )}
             </div>
           )}
 

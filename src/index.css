@@ -50,11 +50,11 @@ body {
   background-clip: text;
 }
 
-.dyslexia-font body {
+body.dyslexia-font, body.dyslexia-font * {
   font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
 }
 
-.high-contrast body {
+body.high-contrast {
   filter: contrast(1.3);
 }
 

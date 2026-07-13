@@ -50,9 +50,9 @@ export default function Home() {
 
       <section className="max-w-7xl mx-auto px-4 -mt-8 relative z-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <AnimatedCounter end={2000} suffix="+" label="Desafios" icon="🧩" />
-          <AnimatedCounter end={50} suffix="+" label="Lições" icon="📚" />
-          <AnimatedCounter end={10} label="Temas" icon="🎨" />
+          <AnimatedCounter end={15} label="Lições" icon="📚" />
+          <AnimatedCounter end={8} label="Puzzles" icon="🧩" />
+          <AnimatedCounter end={11} label="Temas" icon="🎨" />
           <AnimatedCounter end={100} suffix="%" label="Gratuito" icon="💝" />
         </div>
       </section>

@@ -62,7 +62,12 @@ export default function Navbar() {
             )}
           </div>
 
-          <button className="md:hidden p-2 rounded-lg hover:bg-gray-100" onClick={() => setIsOpen(!isOpen)}>
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 bg-transparent border-none cursor-pointer"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={isOpen}
+          >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>

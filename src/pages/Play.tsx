@@ -28,6 +28,9 @@ export default function Play() {
   }, [])
 
   const makeMove = useCallback((from: string, to: string) => {
+    if (game.turn() !== 'w' || game.isGameOver()) return false
+    const piece = game.get(from as 'a1')
+    if (!piece || piece.color !== 'w') return false
     const gameCopy = new Chess(game.fen())
     try {
       const move = gameCopy.move({ from, to, promotion: 'q' })
@@ -36,10 +39,15 @@ export default function Play() {
       setMoveHistory(prev => [...prev, move.san])
       setSelectedSquare(null)
       if (gameCopy.isGameOver()) {
-        if (gameCopy.isCheckmate()) setGameOver('Xeque-Mate! Você venceu!')
-        else if (gameCopy.isDraw()) setGameOver('Empate!')
-        else if (gameCopy.isStalemate()) setGameOver('Afogamento!')
-        dispatch({ type: 'ADD_XP', amount: 20 })
+        if (gameCopy.isCheckmate()) {
+          setGameOver('Xeque-Mate! Você venceu! 🎉')
+          dispatch({ type: 'ADD_XP', amount: 20 })
+          dispatch({ type: 'ADD_COINS', amount: 10 })
+        } else if (gameCopy.isStalemate()) {
+          setGameOver('Afogamento! Empate.')
+        } else {
+          setGameOver('Empate!')
+        }
         return true
       }
       setTimeout(() => makeAIMove(gameCopy), 300)

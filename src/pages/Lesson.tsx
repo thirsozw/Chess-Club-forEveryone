@@ -16,8 +16,9 @@ export default function Lesson() {
   if (!lesson) return <div className="text-center py-20">Lição não encontrada</div>
 
   const { id, steps, xpReward, coinReward, icon, title, description } = lesson
-  const step = steps[stepIndex]
-  const isLastStep = stepIndex === steps.length - 1
+  const safeIndex = Math.min(stepIndex, steps.length - 1)
+  const step = steps[safeIndex]
+  const isLastStep = safeIndex === steps.length - 1
   const isCompleted = state.completedLessons.includes(id)
   const hasQuiz = quizzes[id] !== undefined
 
@@ -33,7 +34,7 @@ export default function Lesson() {
       if (hasQuiz) navigate(`/quiz/${id}`)
       else navigate('/learn')
     } else {
-      setStepIndex(s => s + 1)
+      setStepIndex(safeIndex + 1)
     }
   }
 
@@ -52,7 +53,7 @@ export default function Lesson() {
       </div>
 
       <div className="w-full bg-gray-200 rounded-full h-2 mb-8">
-        <div className="h-2 rounded-full bg-[var(--color-primary)] transition-all duration-300" style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }} />
+        <div className="h-2 rounded-full bg-[var(--color-primary)] transition-all duration-300" style={{ width: `${((safeIndex + 1) / steps.length) * 100}%` }} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -63,16 +64,16 @@ export default function Lesson() {
         </div>
 
         <div>
-          <div key={stepIndex} className="bg-white rounded-2xl p-6 shadow-lg anim-fade-up">
-            <div className="text-sm text-gray-400 mb-3">Passo {stepIndex + 1} de {steps.length}</div>
+          <div key={safeIndex} className="bg-white rounded-2xl p-6 shadow-lg anim-fade-up">
+            <div className="text-sm text-gray-400 mb-3">Passo {safeIndex + 1} de {steps.length}</div>
             <h2 className="text-xl font-bold mb-4">{step.title}</h2>
             <p className="text-gray-600 leading-relaxed text-base">{step.content}</p>
           </div>
 
           <div className="flex justify-between mt-6">
             <button
-              onClick={() => setStepIndex(s => s - 1)}
-              disabled={stepIndex === 0}
+              onClick={() => setStepIndex(safeIndex - 1)}
+              disabled={safeIndex === 0}
               className="flex items-center gap-1 px-5 py-3 rounded-xl font-bold disabled:opacity-30 bg-gray-100 hover:bg-gray-200 border-none cursor-pointer text-base"
             >
               <ChevronLeft size={18} /> Anterior

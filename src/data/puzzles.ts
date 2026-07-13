@@ -13,9 +13,9 @@ export const puzzles: Puzzle[] = [
   { id: 'p2', title: 'Garfo de Cavalo', description: 'Use o Cavalo para atacar duas peças!', fen: '4k3/8/8/8/8/5N2/8/4K3 w - - 0 1', solution: ['f3e5'], difficulty: 'easy', xpReward: 10 },
   { id: 'p3', title: 'Captura a Rainha!', description: 'Capture a Rainha inimiga!', fen: '4k3/8/3q4/8/8/8/5B2/4K3 w - - 0 1', solution: ['f2d4'], difficulty: 'easy', xpReward: 10 },
   { id: 'p4', title: 'Mate com Torre', description: 'Use a Torre para dar xeque-mate!', fen: '7k/8/7K/8/8/8/8/R7 w - - 0 1', solution: ['a1a8'], difficulty: 'medium', xpReward: 20 },
-  { id: 'p5', title: 'Descuberta', description: 'Faça um ataque descoberto!', fen: '4k3/8/4R3/4B3/8/8/8/4K3 w - - 0 1', solution: ['e5c3'], difficulty: 'medium', xpReward: 20 },
-  { id: 'p6', title: 'Mate da Escadinha', description: 'Use duas Torres para dar mate!', fen: '7k/8/8/8/8/8/8/R3RK2 w - - 0 1', solution: ['a1a8'], difficulty: 'medium', xpReward: 20 },
-  { id: 'p7', title: 'Cravada Mortal', description: 'Use uma cravada para ganhar material!', fen: '2kr4/8/8/8/8/8/8/R3K2R w K - 0 1', solution: ['a1a8'], difficulty: 'hard', xpReward: 30 },
+  { id: 'p5', title: 'Descoberta', description: 'Faça um ataque descoberto!', fen: '4k3/8/4R3/4B3/8/8/8/4K3 w - - 0 1', solution: ['e5c3'], difficulty: 'medium', xpReward: 20 },
+  { id: 'p6', title: 'Mate da Escadinha', description: 'Use duas Torres para dar mate!', fen: '6k1/R7/8/8/8/8/8/4R2K w - - 0 1', solution: ['e1e8'], difficulty: 'medium', xpReward: 20 },
+  { id: 'p7', title: 'Ataque Raio-X', description: 'Dê xeque e ganhe a Torre inimiga!', fen: '2kr4/8/8/8/8/8/8/R3K2R w K - 0 1', solution: ['a1a8'], difficulty: 'hard', xpReward: 30 },
   { id: 'p8', title: 'Mate Sufocado', description: 'Dê um xeque-mate sufocado com o Cavalo!', fen: '6rk/6pp/8/6N1/8/8/8/4K3 w - - 0 1', solution: ['g5f7'], difficulty: 'hard', xpReward: 30 },
 ]
 

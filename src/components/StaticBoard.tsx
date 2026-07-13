@@ -25,11 +25,15 @@ interface Props {
   fen?: string
   highlightSquares?: string[]
   size?: number
+  themeId?: string
+  boardColors?: { light: string; dark: string }
 }
 
-export default function StaticBoard({ fen, highlightSquares = [], size = 400 }: Props) {
+export default function StaticBoard({ fen, highlightSquares = [], size = 400, themeId, boardColors }: Props) {
   const { currentTheme } = useTheme()
-  const themeMap = getThemePieceMap(currentTheme.id)
+  const effectiveThemeId = themeId ?? currentTheme.id
+  const colors = boardColors ?? currentTheme.boardColors
+  const themeMap = getThemePieceMap(effectiveThemeId)
 
   const position = fen || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
   const board = parseFen(position)
@@ -70,11 +74,8 @@ export default function StaticBoard({ fen, highlightSquares = [], size = 400 }: 
             <div
               key={squareId}
               style={{
-                backgroundColor: isHighlighted
-                  ? 'rgba(108, 99, 255, 0.35)'
-                  : isLight
-                    ? currentTheme.boardColors.light
-                    : currentTheme.boardColors.dark,
+                backgroundColor: isLight ? colors.light : colors.dark,
+                boxShadow: isHighlighted ? 'inset 0 0 0 100vmax rgba(108, 99, 255, 0.35)' : undefined,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

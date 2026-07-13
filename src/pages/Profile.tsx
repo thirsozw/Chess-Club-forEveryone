@@ -1,11 +1,18 @@
-import { Trophy, Star, Flame, BookOpen, Coins, Target } from 'lucide-react'
+import { Trophy, Star, Flame, BookOpen, Coins, Target, Eye } from 'lucide-react'
 import { useGame } from '../context/GameContext'
+import { useAccessibility } from '../context/AccessibilityContext'
 import { lessons } from '../data/lessons'
 import { medals as medalsList } from '../data/puzzles'
 
 export default function Profile() {
   const { state } = useGame()
+  const { dyslexiaFont, highContrast, toggleDyslexia, toggleHighContrast } = useAccessibility()
   const xpProgress = (state.xp % 100)
+
+  const a11yOptions = [
+    { label: 'Fonte para dislexia', desc: 'Letras mais fáceis de ler', active: dyslexiaFont, onToggle: toggleDyslexia },
+    { label: 'Alto contraste', desc: 'Cores mais fortes e visíveis', active: highContrast, onToggle: toggleHighContrast },
+  ]
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 anim-fade-up">
@@ -57,6 +64,31 @@ export default function Profile() {
               </div>
             )
           })}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl p-6 shadow-md mb-8">
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+          <Eye size={24} className="text-blue-500" /> Acessibilidade
+        </h2>
+        <div className="space-y-3">
+          {a11yOptions.map((opt, i) => (
+            <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+              <div>
+                <div className="font-bold text-sm">{opt.label}</div>
+                <div className="text-xs text-gray-500">{opt.desc}</div>
+              </div>
+              <button
+                onClick={opt.onToggle}
+                role="switch"
+                aria-checked={opt.active}
+                aria-label={opt.label}
+                className={`relative w-12 h-7 rounded-full border-none cursor-pointer transition-colors ${opt.active ? 'bg-[var(--color-primary)]' : 'bg-gray-300'}`}
+              >
+                <span className={`absolute top-1 w-5 h-5 rounded-full bg-white shadow transition-all ${opt.active ? 'left-6' : 'left-1'}`} />
+              </button>
+            </div>
+          ))}
         </div>
       </div>
 
