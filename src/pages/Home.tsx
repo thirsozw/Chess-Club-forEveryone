@@ -30,7 +30,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 py-20 md:py-32 relative z-10">
           <div className="text-center max-w-3xl mx-auto anim-fade-up">
             <div className="text-7xl md:text-8xl mb-6 anim-scale-in">♞</div>
-            <h1 className="text-4xl md:text-6xl font-black mb-4 leading-tight">Chess For Everyone</h1>
+            <h1 className="text-4xl md:text-6xl font-black mb-4 leading-tight">Xadrez Esperança</h1>
             <p className="text-lg md:text-xl opacity-90 mb-8 font-medium">
               Aprenda xadrez de forma divertida enquanto desenvolve habilidades para a vida.
             </p>

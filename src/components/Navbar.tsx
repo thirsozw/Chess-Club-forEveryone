@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-2 no-underline">
             <span className="text-3xl">♞</span>
-            <span className="font-extrabold text-xl text-[var(--color-primary)]">Chess For Everyone</span>
+            <span className="font-extrabold text-xl text-[var(--color-primary)]">Xadrez Esperança</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">

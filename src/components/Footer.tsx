@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl">♞</span>
-              <span className="font-extrabold text-lg text-[var(--color-primary)]">Chess For Everyone</span>
+              <span className="font-extrabold text-lg text-[var(--color-primary)]">Xadrez Esperança</span>
             </div>
             <p className="text-sm text-gray-500">
               Ensinando xadrez para crianças de forma divertida e acessível, promovendo inclusão e desenvolvimento.
